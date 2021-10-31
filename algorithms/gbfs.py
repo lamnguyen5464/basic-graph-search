@@ -8,25 +8,28 @@ def gbfs(initNode, endNode):
 	preNodeMap = {}
 	queue = []
 	heapq.heappush(queue, (distance[initNode], initNode, initNode))		# priority queue
+	signalStop = False
 
-	while (len(queue) != 0):
+	while (len(queue) != 0 and not signalStop):
 		(currentLength, preNode, currentNode) = heapq.heappop(queue)
 
 		if currentNode in distance and currentLength > distance[currentNode]:
 			continue
 
-		listExpanded.append(currentNode)
-
 		preNodeMap[currentNode] = preNode		# for get returnPath
 
-		if currentNode == endNode:
-			break
+		listExpanded.append(currentNode)
 
 		for e in EDGES:
 			if e[0] != currentNode and e[1] != currentNode:
 				continue
 
 			nextNode = e[0] == currentNode and e[1] or e[0]
+
+			if (nextNode == endNode):
+				preNodeMap[nextNode] = currentNode		# for get returnPath
+				signalStop = True
+				break
 
 			heuristic = getHeuristic(nextNode, endNode)
 
