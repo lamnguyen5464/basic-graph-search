@@ -3,16 +3,16 @@ from input import EDGES
 from utilities import getHeuristic
 
 def aStarSearch(initNode, endNode):
-	distance = { initNode: getHeuristic(initNode, endNode) + 0 }
+	heuristicDistance = { initNode: getHeuristic(initNode, endNode) + 0 }
 	listExpanded = []
 	preNodeMap = {}
 	queue = []
-	heapq.heappush(queue, (distance[initNode], initNode, initNode))		# priority queue
+	heapq.heappush(queue, (heuristicDistance[initNode], 0, initNode, initNode))		# priority queue
 
 	while (len(queue) != 0):
-		(currentLength, preNode, currentNode) = heapq.heappop(queue)
+		(currentHeuristic, currentLength, preNode, currentNode) = heapq.heappop(queue)
 
-		if currentNode in distance and currentLength > distance[currentNode]:
+		if currentNode in heuristicDistance and currentHeuristic > heuristicDistance[currentNode]:
 			continue
 
 		listExpanded.append(currentNode)
@@ -29,11 +29,12 @@ def aStarSearch(initNode, endNode):
 			edgeLength = e[2]
 			nextNode = e[0] == currentNode and e[1] or e[0]
 
-			heuristic = getHeuristic(nextNode, endNode) + currentLength + edgeLength
+			nextLength = + currentLength + edgeLength
+			nextHeuristic = getHeuristic(nextNode, endNode) + nextLength
 
-			if not nextNode in distance or distance[nextNode] > heuristic:
-				distance[nextNode] = heuristic
-				heapq.heappush(queue, (heuristic, currentNode, nextNode))
+			if not nextNode in heuristicDistance or heuristicDistance[nextNode] > nextHeuristic:
+				heuristicDistance[nextNode] = nextHeuristic
+				heapq.heappush(queue, (nextHeuristic, nextLength, currentNode, nextNode))
 
 
 	# get return path

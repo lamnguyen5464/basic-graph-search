@@ -8,7 +8,7 @@ from algorithms.aStarSearch import aStarSearch
 startNode = 'A'
 endNode = 'S'
 
-print("### ( [LIST EXPANDED], [LIST RETURN PATH])###")
+print("### ( [LIST EXPANDED], [LIST RETURN PATH] ) ###")
 
 print("dfs: ", dfs(startNode, endNode))
 print("bfs: ", bfs(startNode, endNode))
