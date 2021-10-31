@@ -4,50 +4,88 @@ from utilities import getNextNodesAbcOrder
 
 def bfs(initNode, endNode):
 	listExpand = []
-	queue = [initNode]
+	preNodeMap = {}
+	queue = [(initNode, initNode)]
+	signalStop = False
 
-	while (len(queue) != 0):
-		currentNode = queue.pop(0)
+	while (len(queue) != 0 and not signalStop):
+		(preNode, currentNode) = queue.pop(0)
 
 		if currentNode in listExpand:
 			continue
 
+		preNodeMap[currentNode] = preNode		# for get returnPath
 		listExpand.append(currentNode)
+
 		listNextNode = getNextNodesAbcOrder(currentNode)
-
 		for nextNode in listNextNode:
-			if nextNode == endNode:
-				return listExpand
-			queue.append(nextNode)
+
+			if nextNode == endNode:	# stop here
+				signalStop = True
+				preNodeMap[nextNode] = currentNode
+
+			queue.append((currentNode, nextNode))
 	
-	return listExpand
 
-def dfs(currentNode, endNode, listExpanded = []):
-	if currentNode in listExpanded or currentNode == endNode:
-		return listExpanded
+	# get returnMap
+	returnPath = []
+	while endNode in preNodeMap and endNode != preNodeMap[endNode]:
+		returnPath.append(endNode)
+		endNode = preNodeMap[endNode]
+	returnPath.append(initNode)
+	returnPath.reverse()
 
-	listExpanded.append(currentNode)
+	return (listExpand, returnPath)
 
-	listNextNode = getNextNodesAbcOrder(currentNode)
-	for nextNode in listNextNode:
-		listExpanded = dfs(nextNode, endNode, listExpanded)
+def dfs(_startNode, _endNode):
+	def dfsHelper(preNode, currentNode, endNode, listExpanded = [], preNodeMap = {}):
+		if currentNode in listExpanded:
+			return (listExpanded, preNodeMap)
 
-	return listExpanded
+		preNodeMap[currentNode] = preNode		# for get return path
+
+		if (currentNode == endNode):
+			return (listExpanded, preNodeMap) 
+
+		listExpanded.append(currentNode)
+
+		listNextNode = getNextNodesAbcOrder(currentNode)
+		for nextNode in listNextNode:
+			(listExpanded, preNodeMap) = dfsHelper(currentNode, nextNode, endNode, listExpanded, preNodeMap)
+
+		return (listExpanded, preNodeMap)
+	
+	# implement call
+	(listExpanded, preNodeMap) = dfsHelper(_startNode, _startNode, _endNode)
+
+	# get returnMap
+	returnPath = []
+	while _endNode in preNodeMap and _endNode != preNodeMap[_endNode]:
+		returnPath.append(_endNode)
+		_endNode = preNodeMap[_endNode]
+	returnPath.append(_startNode)
+	returnPath.reverse()
+
+	return (listExpanded, returnPath)
+
 
 
 def ucs(initNode, endNode):
+	distance = { initNode:0 }
 	listExpanded = []
-	distance = {initNode:0}
+	preNodeMap = {}
 	queue = []
-	heapq.heappush(queue, (0, initNode))		# priority queue
+	heapq.heappush(queue, (0, initNode, initNode))		# priority queue
 
 	while (len(queue) != 0):
-		(currentLength, currentNode) = heapq.heappop(queue)
+		(currentLength, preNode, currentNode) = heapq.heappop(queue)
 
 		if currentNode in distance and currentLength > distance[currentNode]:
 			continue
 
 		listExpanded.append(currentNode)
+
+		preNodeMap[currentNode] = preNode		# for get returnPath
 
 		if currentNode == endNode:
 			break
@@ -55,14 +93,24 @@ def ucs(initNode, endNode):
 		for e in EDGES:
 			if e[0] != currentNode and e[1] != currentNode:
 				continue
-			nextNode = e[0] == currentNode and e[1] or e[0]
+
 			edgeLength = e[2]
+			nextNode = e[0] == currentNode and e[1] or e[0]
 
 			if not nextNode in distance or distance[nextNode] > currentLength + edgeLength:
 				distance[nextNode] = currentLength + edgeLength
-				heapq.heappush(queue, (currentLength + edgeLength, nextNode))
-	
-	return listExpanded
+				heapq.heappush(queue, (currentLength + edgeLength, currentNode, nextNode))
+
+
+	# get return path
+	returnPath = []
+	while endNode in preNodeMap and endNode != preNodeMap[endNode]:
+		returnPath.append(endNode)
+		endNode = preNodeMap[endNode]
+	returnPath.append(initNode)
+	returnPath.reverse()
+
+	return (listExpanded, returnPath)
 
 
 startNode = 'A'
