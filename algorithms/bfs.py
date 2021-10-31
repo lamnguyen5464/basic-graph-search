@@ -1,5 +1,6 @@
-from utilities import getNextNodesAbcOrder
+from utilities import getNextNodesAbcOrder, output
 
+@output
 def bfs(initNode, endNode):
 	listExpand = []
 	preNodeMap = {}

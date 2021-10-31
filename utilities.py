@@ -1,4 +1,5 @@
 from input import HEURISTIC, EDGES
+from functools import wraps
 
 # UTILITIES
 def getHeuristic(a, b):
@@ -28,6 +29,13 @@ def getNextNodesAbcOrder(currentNode):
 	list.sort()
 	return list
 
+def output(func):
+	@wraps(func)
+	def wrapper(startNode, endNode):
+		(listExpaned, listReturnPath) = func(startNode, endNode)
+		print("- List expanded: ", listExpaned)
+		print("- List return path: ", listReturnPath)
+	return wrapper
 
 
 ######################################################################

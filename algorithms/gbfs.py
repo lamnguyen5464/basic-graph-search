@@ -1,7 +1,8 @@
 import heapq
 from input import EDGES
-from utilities import getHeuristic
+from utilities import getHeuristic, output
 
+@output
 def gbfs(initNode, endNode):
 	distance = { initNode: getHeuristic(initNode, endNode) }
 	listExpanded = []

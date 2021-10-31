@@ -1,5 +1,6 @@
-from utilities import getNextNodesAbcOrder
+from utilities import getNextNodesAbcOrder, output
 
+@output
 def dfs(_startNode, _endNode):
 	def dfsHelper(preNode, currentNode, endNode, listExpanded = [], preNodeMap = {}):
 		if currentNode in listExpanded:

@@ -1,6 +1,8 @@
 import heapq
 from input import EDGES
+from utilities import output
 
+@output
 def ucs(initNode, endNode):
 	distance = { initNode:0 }
 	listExpanded = []
