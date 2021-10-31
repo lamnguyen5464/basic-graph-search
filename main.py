@@ -1,6 +1,6 @@
 import heapq
-from input import HEURISTIC, EDGES
-from utilities import getNextNodesAbcOrder
+from input import EDGES
+from utilities import getNextNodesAbcOrder, getHeuristic
 
 def bfs(initNode, endNode):
 	listExpand = []
@@ -69,7 +69,6 @@ def dfs(_startNode, _endNode):
 	return (listExpanded, returnPath)
 
 
-
 def ucs(initNode, endNode):
 	distance = { initNode:0 }
 	listExpanded = []
@@ -112,6 +111,50 @@ def ucs(initNode, endNode):
 
 	return (listExpanded, returnPath)
 
+def gbfs(initNode, endNode):
+	distance = { initNode: getHeuristic(initNode, endNode) }
+	listExpanded = []
+	preNodeMap = {}
+	queue = []
+	heapq.heappush(queue, (distance[initNode], initNode, initNode))		# priority queue
+
+	while (len(queue) != 0):
+		(currentLength, preNode, currentNode) = heapq.heappop(queue)
+
+		if currentNode in distance and currentLength > distance[currentNode]:
+			continue
+
+		listExpanded.append(currentNode)
+
+		preNodeMap[currentNode] = preNode		# for get returnPath
+
+		if currentNode == endNode:
+			break
+
+		for e in EDGES:
+			if e[0] != currentNode and e[1] != currentNode:
+				continue
+
+			edgeLength = e[2]
+			nextNode = e[0] == currentNode and e[1] or e[0]
+
+			heuristic = getHeuristic(nextNode, endNode)
+
+			if not nextNode in distance or distance[nextNode] > heuristic:
+				distance[nextNode] = heuristic
+				heapq.heappush(queue, (heuristic, currentNode, nextNode))
+
+
+	# get return path
+	returnPath = []
+	while endNode in preNodeMap and endNode != preNodeMap[endNode]:
+		returnPath.append(endNode)
+		endNode = preNodeMap[endNode]
+	returnPath.append(initNode)
+	returnPath.reverse()
+
+	return (listExpanded, returnPath)
+
 
 startNode = 'A'
 endNode = 'S'
@@ -120,3 +163,4 @@ print("### LIST EXPANDED ###")
 print("dfs: ", dfs(startNode, endNode))
 print("bfs: ", bfs(startNode, endNode))
 print("ucs: ", ucs(startNode, endNode))
+print("gbfs: ", gbfs(startNode, endNode))
