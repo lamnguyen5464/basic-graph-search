@@ -4,8 +4,8 @@ from algorithms.ucs import ucs
 from algorithms.gbfs import gbfs
 from algorithms.aStarSearch import aStarSearch
 
-startNode = 'S'
-endNode = 'G'
+startNode = 'A'
+endNode = 'J'
 
 print("### ( [LIST EXPANDED], [LIST RETURN PATH] ) ###")
 

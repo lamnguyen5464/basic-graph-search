@@ -1,33 +1,45 @@
-from utilities import getNextNodesAbcOrder, output
+from utilities import getNextNodesAbcOrder, output, goalTest
+
 
 @output
 def dfs(_startNode, _endNode):
-	def dfsHelper(preNode, currentNode, endNode, listExpanded = [], preNodeMap = {}):
-		if currentNode in listExpanded:
-			return (listExpanded, preNodeMap)
+    def dfsHelper(preNode, currentNode, endNode, listExpanded=[], preNodeMap={}):
+        if currentNode in listExpanded:
+            return (listExpanded, preNodeMap, False)
 
-		preNodeMap[currentNode] = preNode		# for get return path
+        preNodeMap[currentNode] = preNode		# for get return path
 
-		if (currentNode == endNode):
-			return (listExpanded, preNodeMap) 
+        if (currentNode == endNode):
+            return (listExpanded, preNodeMap, True)
 
-		listExpanded.append(currentNode)
+        listExpanded.append(currentNode)
 
-		listNextNode = getNextNodesAbcOrder(currentNode)
-		for nextNode in listNextNode:
-			(listExpanded, preNodeMap) = dfsHelper(currentNode, nextNode, endNode, listExpanded, preNodeMap)
+        listNextNode = getNextNodesAbcOrder(currentNode)
 
-		return (listExpanded, preNodeMap)
-	
-	# implement call
-	(listExpanded, preNodeMap) = dfsHelper(_startNode, _startNode, _endNode)
+        # implement goal test
+        if goalTest(listNextNode, endNode):
+            preNodeMap[endNode] = currentNode
+            return (listExpanded, preNodeMap, True)
 
-	# get returnMap
-	returnPath = []
-	while _endNode in preNodeMap and _endNode != preNodeMap[_endNode]:
-		returnPath.append(_endNode)
-		_endNode = preNodeMap[_endNode]
-	returnPath.append(_startNode)
-	returnPath.reverse()
+        for nextNode in listNextNode:
+            (listExpanded, preNodeMap, found) = dfsHelper(
+                currentNode, nextNode, endNode, listExpanded, preNodeMap)
 
-	return (listExpanded, returnPath)
+            if found:
+                return (listExpanded, preNodeMap, True)
+
+        return (listExpanded, preNodeMap, False)
+
+    # implement call
+    (listExpanded, preNodeMap, _) = dfsHelper(
+        _startNode, _startNode, _endNode)
+
+    # get returnMap
+    returnPath = []
+    while _endNode in preNodeMap and _endNode != preNodeMap[_endNode]:
+        returnPath.append(_endNode)
+        _endNode = preNodeMap[_endNode]
+    returnPath.append(_startNode)
+    returnPath.reverse()
+
+    return (listExpanded, returnPath)

@@ -39,3 +39,10 @@ def output(func):
         print("- List expanded: ", listExpaned)
         print("- List return path: ", listReturnPath)
     return wrapper
+
+
+def goalTest(listNodes, goalNode):
+    for node in listNodes:
+        if node == goalNode:
+            return True
+    return False

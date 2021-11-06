@@ -1,37 +1,36 @@
-from utilities import getNextNodesAbcOrder, output
+from utilities import getNextNodesAbcOrder, output, goalTest
+
 
 @output
 def bfs(initNode, endNode):
-	listExpand = []
-	preNodeMap = {}
-	queue = [(initNode, initNode)]
-	signalStop = False
+    listExpand = []
+    preNodeMap = {}
+    queue = [(initNode, initNode)]
 
-	while (len(queue) != 0 and not signalStop):
-		(preNode, currentNode) = queue.pop(0)
+    while (len(queue) != 0):
+        (preNode, currentNode) = queue.pop(0)
 
-		if currentNode in listExpand:
-			continue
+        if currentNode in listExpand:
+            continue
 
-		preNodeMap[currentNode] = preNode		# for get returnPath
-		listExpand.append(currentNode)
+        preNodeMap[currentNode] = preNode		# for get returnPath
+        listExpand.append(currentNode)
 
-		listNextNode = getNextNodesAbcOrder(currentNode)
-		for nextNode in listNextNode:
+        listNextNode = getNextNodesAbcOrder(currentNode)
+        # Goal test
+        if goalTest(listNextNode, endNode) == True:
+            preNodeMap[endNode] = currentNode
+            break
 
-			if nextNode == endNode:	# stop here
-				signalStop = True
-				preNodeMap[nextNode] = currentNode
+        for nextNode in listNextNode:
+            queue.append((currentNode, nextNode))
 
-			queue.append((currentNode, nextNode))
-	
+    # get returnMap
+    returnPath = []
+    while endNode in preNodeMap and endNode != preNodeMap[endNode]:
+        returnPath.append(endNode)
+        endNode = preNodeMap[endNode]
+    returnPath.append(initNode)
+    returnPath.reverse()
 
-	# get returnMap
-	returnPath = []
-	while endNode in preNodeMap and endNode != preNodeMap[endNode]:
-		returnPath.append(endNode)
-		endNode = preNodeMap[endNode]
-	returnPath.append(initNode)
-	returnPath.reverse()
-
-	return (listExpand, returnPath)
+    return (listExpand, returnPath)
