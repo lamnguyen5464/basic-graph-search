@@ -1,10 +1,9 @@
 import heapq
-from input import EDGES
-from utilities import output
+from utilities import middleware
 
 
-@output
-def ucs(initNode, endNode):
+@middleware
+def ucs(initNode, endNode, adjacencyList):
     distance = {initNode: 0}
     listExpanded = []
     preNodeMap = {}
@@ -24,17 +23,11 @@ def ucs(initNode, endNode):
         if currentNode == endNode:
             break
 
-        for e in EDGES:
-            if e[0] != currentNode and e[1] != currentNode:
-                continue
-
-            edgeLength = e[2]
-            nextNode = e[0] == currentNode and e[1] or e[0]
-
-            if not nextNode in distance or distance[nextNode] > currentLength + edgeLength:
-                distance[nextNode] = currentLength + edgeLength
+        for nextNode in adjacencyList[currentNode]:
+            if not nextNode in distance or distance[nextNode] > currentLength + 1:
+                distance[nextNode] = currentLength + 1
                 heapq.heappush(
-                    queue, (currentLength + edgeLength, currentNode, nextNode))
+                    queue, (currentLength + 1, currentNode, nextNode))
 
     # get return path
     returnPath = []

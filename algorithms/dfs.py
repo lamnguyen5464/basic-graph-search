@@ -1,7 +1,7 @@
-from utilities import getNextNodesAbcOrder, output, goalTest
+from utilities import getNextNodesAbcOrder, middleware, goalTest
 
 
-@output
+@middleware
 def dfs(_startNode, _endNode):
     def dfsHelper(preNode, currentNode, endNode, listExpanded=[], preNodeMap={}):
         if currentNode in listExpanded:

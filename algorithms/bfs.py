@@ -1,7 +1,7 @@
-from utilities import getNextNodesAbcOrder, output, goalTest
+from utilities import getNextNodesAbcOrder, middleware, goalTest
 
 
-@output
+@middleware
 def bfs(initNode, endNode):
     listExpand = []
     preNodeMap = {}

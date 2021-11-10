@@ -1,5 +1,6 @@
 from input import HEURISTIC, EDGES
 from functools import wraps
+import time
 
 # UTILITIES
 
@@ -32,12 +33,18 @@ def getNextNodesAbcOrder(currentNode):
     return list
 
 
-def output(func):
+def middleware(func):
     @wraps(func)
     def wrapper(startNode, endNode):
-        (listExpaned, listReturnPath) = func(startNode, endNode)
+        startTime = time.time()
+        adjacencyList = input()
+
+        (listExpaned, listReturnPath) = func(
+            startNode, endNode, adjacencyList)
+
         print("- List expanded: ", listExpaned)
         print("- List return path: ", listReturnPath)
+        print("- Duration: ", time.time() - startTime, "(ms)")
     return wrapper
 
 
@@ -46,3 +53,20 @@ def goalTest(listNodes, goalNode):
         if node == goalNode:
             return True
     return False
+
+
+def input():
+    data = []
+    with open('INPUT.txt', 'r') as f:
+        n = [(int)(num) for num in f.readline().split()][0]		# get a number
+        n = n * n
+        while n > 0:
+            line = [(int)(num) for num in f.readline().split()]
+            n = n - 1
+            data.append(line)
+
+    return data
+
+
+def getCordinate(node, n):
+    return ((int)(node / n), node % n)

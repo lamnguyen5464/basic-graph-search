@@ -4,22 +4,25 @@ from algorithms.ucs import ucs
 from algorithms.gbfs import gbfs
 from algorithms.aStarSearch import aStarSearch
 
-startNode = 'A'
-endNode = 'J'
+startNode = 0
+endNode = 61
 
-print("### ( [LIST EXPANDED], [LIST RETURN PATH] ) ###")
+# print("### ( [LIST EXPANDED], [LIST RETURN PATH] ) ###")
 
-print("dfs: ")
-dfs(startNode, endNode)
+# print("dfs: ")
+# dfs(startNode, endNode)
 
-print("bfs: ")
-bfs(startNode, endNode)
+# print("bfs: ")
+# bfs(startNode, endNode)
 
-print("ucs: ")
+# print("ucs: ")
+# ucs(startNode, endNode)
+
+# print("gbfs: ")
+# gbfs(startNode, endNode)
+
+# print("aStarSearch: ")
+# aStarSearch(startNode, endNode)
+
+
 ucs(startNode, endNode)
-
-print("gbfs: ")
-gbfs(startNode, endNode)
-
-print("aStarSearch: ")
-aStarSearch(startNode, endNode)

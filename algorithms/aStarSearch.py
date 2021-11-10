@@ -1,9 +1,9 @@
 import heapq
 from input import EDGES
-from utilities import getHeuristic, output
+from utilities import getHeuristic, middleware
 
 
-@output
+@middleware
 def aStarSearch(initNode, endNode):
     heuristicDistance = {initNode: getHeuristic(initNode, endNode) + 0}
     listExpanded = []
