@@ -1,11 +1,10 @@
 import heapq
-from input import EDGES
 from utilities import getHeuristic, middleware
 
 
 @middleware
-def aStarSearch(initNode, endNode):
-    heuristicDistance = {initNode: getHeuristic(initNode, endNode) + 0}
+def aStarSearch(n, initNode, endNode, adjacencyList):
+    heuristicDistance = {initNode: getHeuristic(n, initNode, endNode) + 0}
     listExpanded = []
     preNodeMap = {}
     queue = []
@@ -26,15 +25,9 @@ def aStarSearch(initNode, endNode):
         if currentNode == endNode:
             break
 
-        for e in EDGES:
-            if e[0] != currentNode and e[1] != currentNode:
-                continue
-
-            edgeLength = e[2]
-            nextNode = e[0] == currentNode and e[1] or e[0]
-
-            nextLength = + currentLength + edgeLength
-            nextHeuristic = getHeuristic(nextNode, endNode) + nextLength
+        for nextNode in adjacencyList[currentNode]:
+            nextLength = + currentLength + 1
+            nextHeuristic = getHeuristic(n, nextNode, endNode) + nextLength
 
             if not nextNode in heuristicDistance or heuristicDistance[nextNode] > nextHeuristic:
                 heuristicDistance[nextNode] = nextHeuristic

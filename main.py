@@ -4,9 +4,6 @@ from algorithms.ucs import ucs
 from algorithms.gbfs import gbfs
 from algorithms.aStarSearch import aStarSearch
 
-startNode = 0
-endNode = 61
-
 # print("### ( [LIST EXPANDED], [LIST RETURN PATH] ) ###")
 
 # print("dfs: ")
@@ -25,4 +22,8 @@ endNode = 61
 # aStarSearch(startNode, endNode)
 
 
-ucs(startNode, endNode)
+ucs()
+
+aStarSearch()
+
+gbfs()

@@ -3,7 +3,7 @@ from utilities import middleware
 
 
 @middleware
-def ucs(initNode, endNode, adjacencyList):
+def ucs(n, initNode, endNode, adjacencyList):
     distance = {initNode: 0}
     listExpanded = []
     preNodeMap = {}

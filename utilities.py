@@ -1,16 +1,15 @@
 from input import HEURISTIC, EDGES
 from functools import wraps
 import time
+import math
 
 # UTILITIES
 
 
-def getHeuristic(a, b):
-    if not a in HEURISTIC or not b in HEURISTIC:
-        return 0
-
-    ha = HEURISTIC[a]
-    return ha
+def getHeuristic(n, a, b):
+    x = getCordinate(a, n)
+    y = getCordinate(b, n)
+    return getEulerDistance(x, y)
 
 
 def initVisitedList():
@@ -35,16 +34,18 @@ def getNextNodesAbcOrder(currentNode):
 
 def middleware(func):
     @wraps(func)
-    def wrapper(startNode, endNode):
+    def wrapper():
+        print(func.__name__)
         startTime = time.time()
-        adjacencyList = input()
+        (n, adjacencyList, endNode) = input()
 
         (listExpaned, listReturnPath) = func(
-            startNode, endNode, adjacencyList)
+            n, 0, endNode, adjacencyList)
 
         print("- List expanded: ", listExpaned)
         print("- List return path: ", listReturnPath)
-        print("- Duration: ", time.time() - startTime, "(ms)")
+        print("- Duration: ", (time.time() - startTime), "(s)")
+        print()
     return wrapper
 
 
@@ -56,17 +57,24 @@ def goalTest(listNodes, goalNode):
 
 
 def input():
-    data = []
+    adjacencyList = []
     with open('INPUT.txt', 'r') as f:
         n = [(int)(num) for num in f.readline().split()][0]		# get a number
-        n = n * n
-        while n > 0:
+        totalLine = n * n
+        while totalLine > 0:
             line = [(int)(num) for num in f.readline().split()]
-            n = n - 1
-            data.append(line)
+            totalLine = totalLine - 1
+            adjacencyList.append(line)
 
-    return data
+        endNode = [(int)(num)
+                   for num in f.readline().split()][0]		# get a number
+
+    return (n, adjacencyList, endNode)
 
 
 def getCordinate(node, n):
     return ((int)(node / n), node % n)
+
+
+def getEulerDistance(x, y):
+    return math.sqrt(math.pow(x[0] - y[0], 2) + math.pow(x[1] - y[1], 2))

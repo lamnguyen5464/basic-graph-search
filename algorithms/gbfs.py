@@ -1,11 +1,10 @@
 import heapq
-from input import EDGES
-from utilities import getHeuristic, middleware
+from utilities import getHeuristic, middleware, goalTest
 
 
 @middleware
-def gbfs(initNode, endNode):
-    distance = {initNode: getHeuristic(initNode, endNode)}
+def gbfs(n, initNode, endNode, adjacencyList):
+    distance = {initNode: getHeuristic(n, initNode, endNode)}
     listExpanded = []
     preNodeMap = {}
     queue = []
@@ -23,18 +22,13 @@ def gbfs(initNode, endNode):
 
         listExpanded.append(currentNode)
 
-        for e in EDGES:
-            if e[0] != currentNode and e[1] != currentNode:
-                continue
+        # Goal test
+        if goalTest(adjacencyList[currentNode], endNode) == True:
+            preNodeMap[endNode] = currentNode
+            break
 
-            nextNode = e[0] == currentNode and e[1] or e[0]
-
-            if (nextNode == endNode):
-                preNodeMap[nextNode] = currentNode		# for get returnPath
-                signalStop = True
-                break
-
-            heuristic = getHeuristic(nextNode, endNode)
+        for nextNode in adjacencyList[currentNode]:
+            heuristic = getHeuristic(n, nextNode, endNode)
 
             if not nextNode in distance or distance[nextNode] > heuristic:
                 distance[nextNode] = heuristic
