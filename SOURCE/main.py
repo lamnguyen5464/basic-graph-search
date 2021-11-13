@@ -8,8 +8,8 @@ import time
 import json
 
 
-inputDir = getRootDir() + "INPUT/"
-outputDir = getRootDir() + "OUTPUT/"
+inputDir = getRootDir() + "/INPUT/"
+outputDir = getRootDir() + "/OUTPUT/"
 
 listInputFiles = getFilesInDir(inputDir)
 

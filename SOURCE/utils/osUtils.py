@@ -5,7 +5,7 @@ from os.path import isfile, join
 
 def getRootDir():
     currentDir = pathlib.Path().resolve()
-    rootDir = str(currentDir).split('SOURCE')[0]
+    rootDir = str(currentDir).split('/SOURCE')[0]
     return rootDir
 
 
