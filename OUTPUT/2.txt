@@ -1,6 +1,6 @@
 {
     "ucs": {
-        "duration": "0.000067949(s)",
+        "duration": "0.000073910(s)",
         "listExpaned": [
             0,
             1,
@@ -87,7 +87,7 @@
         ]
     },
     "ids": {
-        "duration": "0.001059294(s)",
+        "duration": "0.001046181(s)",
         "listExpaned": {
             "limit - 0": [],
             "limit - 1": [
@@ -794,7 +794,7 @@
         ]
     },
     "aStarSearch": {
-        "duration": "0.000195026(s)",
+        "duration": "0.000205994(s)",
         "listExpaned": [
             0,
             8,
@@ -875,7 +875,7 @@
         ]
     },
     "gbfs": {
-        "duration": "0.000106096(s)",
+        "duration": "0.000109911(s)",
         "listExpaned": [
             0,
             8,

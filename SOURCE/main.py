@@ -35,7 +35,7 @@ for testFile in listInputFiles:
         (listExpanded, listReturnPath) = method(n, 0, endNode, adjacencyList)
 
         res = {}
-        res["duration"] = str(time.time() - startTime) + "(s)"
+        res["duration"] = "%.9f(s)" % (time.time() - startTime)
         res["listExpaned"] = listExpanded
         res["listReturnPath"] = listReturnPath
 
