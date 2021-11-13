@@ -38,8 +38,8 @@ for testFile in listInputFiles:
         res = {}
         res["listExpanded"] = listExpanded
         res["listReturnPath"] = listReturnPath
-        res["timeCost"] = timeCost
-        res["timeExecuted"] = "%.9f(s)" % (time.time() - startTime)
+        res["timeToEscape"] = timeCost
+        # res["timeExecuted"] = "%.9f(s)" % (time.time() - startTime)
 
         output[method.__name__] = res
 
