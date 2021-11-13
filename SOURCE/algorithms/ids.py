@@ -29,12 +29,14 @@ def ids(n, _startNode, _endNode, adjacencyList):
     # implement call
     limit = 0
     listExpandedOfLimit = {}
+    timeCost = 0
 
     while True:
         (listExpanded, preNodeMap, found) = idsHelper(
             _startNode, _startNode, _endNode, [], {}, limit)
 
         listExpandedOfLimit["limit - %d" % (limit)] = listExpanded
+        timeCost = timeCost + len(listExpanded) + 1
 
         if (found):
             break
@@ -48,4 +50,4 @@ def ids(n, _startNode, _endNode, adjacencyList):
     returnPath.append(_startNode)
     returnPath.reverse()
 
-    return (listExpandedOfLimit, returnPath)
+    return (timeCost, listExpandedOfLimit, returnPath)

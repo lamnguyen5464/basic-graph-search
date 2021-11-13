@@ -1,7 +1,6 @@
 {
     "ucs": {
-        "timeExecuted": "0.000076056(s)",
-        "listExpaned": [
+        "listExpanded": [
             0,
             1,
             8,
@@ -85,11 +84,11 @@
             53,
             61
         ],
-        "duration": 23
+        "timeCost": 57,
+        "timeExecuted": "0.000074148(s)"
     },
     "ids": {
-        "timeExecuted": "0.001028776(s)",
-        "listExpaned": {
+        "listExpanded": {
             "limit - 0": [],
             "limit - 1": [
                 0
@@ -793,11 +792,11 @@
             53,
             61
         ],
-        "duration": 23
+        "timeCost": 655,
+        "timeExecuted": "0.000943184(s)"
     },
     "aStarSearch": {
-        "timeExecuted": "0.002389193(s)",
-        "listExpaned": [
+        "listExpanded": [
             0,
             8,
             1,
@@ -875,11 +874,11 @@
             53,
             61
         ],
-        "duration": 23
+        "timeCost": 51,
+        "timeExecuted": "0.001682997(s)"
     },
     "gbfs": {
-        "timeExecuted": "0.000138044(s)",
-        "listExpaned": [
+        "listExpanded": [
             0,
             8,
             16,
@@ -932,6 +931,7 @@
             53,
             61
         ],
-        "duration": 23
+        "timeCost": 27,
+        "timeExecuted": "0.000109196(s)"
     }
 }

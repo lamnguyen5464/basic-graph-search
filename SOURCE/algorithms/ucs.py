@@ -35,4 +35,4 @@ def ucs(n, initNode, endNode, adjacencyList):
     returnPath.append(initNode)
     returnPath.reverse()
 
-    return (listExpanded, returnPath)
+    return (len(listExpanded), listExpanded, returnPath)

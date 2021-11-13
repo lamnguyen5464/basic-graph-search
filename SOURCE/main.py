@@ -32,13 +32,14 @@ for testFile in listInputFiles:
     # implement
     for method in methods:
         startTime = time.time()
-        (listExpanded, listReturnPath) = method(n, 0, endNode, adjacencyList)
+        (timeCost, listExpanded, listReturnPath) = method(
+            n, 0, endNode, adjacencyList)
 
         res = {}
-        res["timeExecuted"] = "%.9f(s)" % (time.time() - startTime)
-        res["listExpaned"] = listExpanded
+        res["listExpanded"] = listExpanded
         res["listReturnPath"] = listReturnPath
-        res["duration"] = len(listReturnPath)
+        res["timeCost"] = timeCost
+        res["timeExecuted"] = "%.9f(s)" % (time.time() - startTime)
 
         output[method.__name__] = res
 
